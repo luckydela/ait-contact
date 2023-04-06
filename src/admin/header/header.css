@@ -1,0 +1,54 @@
+
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: var(--header-height);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #73608887;
+    padding: 0 1rem;
+    transition: var(--transition-type);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+} 
+
+.header-link{
+    padding-left: 2rem;
+}
+.header-link .nav-link-name{
+    color: #000;
+}
+
+i{
+    color: #000;
+    padding: 6px;
+}
+
+
+
+.header-link
+ .nav-tooltip{
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    right: 0%;
+}
+
+ 
+.header-link:hover
+ .nav-tooltip{
+    visibility: visible;
+ }

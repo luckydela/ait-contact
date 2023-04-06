@@ -1,0 +1,110 @@
+:root{
+    --header-height:3rem;
+    --nav-width:1px;
+    --white-color:#e9eec4;
+    --btn-color:#063970;
+    --plain-white:#ffffffd9;
+    --transition-type:0.5s;
+}
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+}
+
+ul{
+    list-style: none;
+}
+main{
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    font-size: 1rem;
+    font-family: 'Nunito Sans', sans;
+    transition: var(--transition-type);
+}
+
+ img{
+   font-size: 100px;
+   width: 150px;
+   height: 50px;
+   border-radius: 15px;
+   margin: 0;
+}
+
+.nav{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    height: 100%;
+}
+.nav-logo, 
+.nav-link{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    column-gap: 2rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.nav-logo-name{
+    font-weight: 700;
+    color: var(--white-color);
+}
+.nav-link{
+    position: relative;
+    color: var(--plain-white);
+    transition: var(--transition-type);
+    margin-bottom: 1.5rem;
+}
+.nav-link:hover{
+    color: var(--white-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.active{
+    color: var(--white-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.active::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 38px;
+    width: 3px;
+    background-color: var(--white-color);
+    transition: var(--transition-type);
+
+}
+
+.show{
+    left: 0;
+}
+/* .space-toggle{
+    padding-left: calc(var(--nav-width) + 1rem);
+} */
+
+@media screen and (min-width:768px) {
+    main{
+        margin: calc(var(--header-height) + 1rem) 0 0 0;
+        padding: 0 1rem 0 calc(var(--nav-width) + 2rem);
+    }
+    .header{
+        height: calc(var(--header-height) + 1rem);
+        padding-left: calc(var(--nav-width) + 2rem);
+    }
+    .sidebar{
+        left: 0;
+        padding: 1rem 0 0 0;
+    }
+    .show{
+        width: calc(var(--header-height) + 156px);
+    }
+    .space-toggle{
+        padding-left: calc(var(--nav-width) + 188px);
+    }
+}

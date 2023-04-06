@@ -1,38 +1,149 @@
-.App {
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', sans;
+}
+
+
+.user-container{
+  background: #73608887;
+    font-family: 'Nunito', sans;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+.user-card{
+    background: linear-gradient(rgba(215, 230, 237, 0.7), rgba(211, 210, 211, 0.7));
+    border-radius: 10px;
+    padding: 30px;
+    width: 700px;
+    text-align: center;
+}
+.user-card h2{
+  color: #000;
+}
+
+
+.contactbox label {
+  display: grid;
+  margin-top: 10px;
+  place-items: flex-start;  
+  margin-left: 90px;
+}
+
+.contactbox input:focus~label,
+.contactbox input:focus~ :valid {
+  top: -1px;
+}
+
+.contactbox input {
+  margin: 10px auto;
+  width: 70%;
+  height: 50px;
+  background: transparent;
+  /* border: none; */
+  /* outline: none; */
+  font-size: 1rem;
+  padding: 0 35px 0 5px;
+  color: #000;
+  border-bottom: 2px solid #04115d;
+  outline-color: #04115d;
+  border-radius: 8px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.contactbox input::-webkit-outer-spin-button,
+.contactbox input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.contactbox input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.contactbox input[type=date] {
+  -moz-appearance: textfield;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.contactbox input:focus {
+  /* outline: none; */
+  border-bottom: 2px solid #010727;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.contactbox i {
+  margin-left: -25px;
+  color: #010727;
+  font-size: 1rem;
+  top: 10px;
+  float: -10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.contactbox span {
+  color: #9e0d0d;
+  font-size: 12px;
+}
+.contactbox textarea{
+  margin: 20px auto;
+  width: 70%;
+  height: 80px;
+  border-radius: 8px;
+  font-size: 18px;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.danger {
+  display: grid;
+  place-items: start;
+  margin-left: 100px;
+  color: #9e0d0d;
+  font-size: 13px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btncls .btn {
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 600;
+  margin: 20px 10px;
+  width: 200px;
+  padding: 10px 0;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  transition: 0.4s;
+  color: #fff;
+  background-color: #44045d;
+  border: 1px solid #44045d;
+  font-size: 18px;
 }
+
+
+.btncls .btn:hover {
+  color: #44045d;
+  width: 210px; 
+  box-shadow: 0 0 20px #a6a5a3;
+  border: 1px solid #44045d;
+  background-color: #fff;
+  border-radius: 4px;
+
+}
+
+.btncls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-card img{
+  width: 200px;
+  height: 80px;
+  float: right;
+  bottom: 0;
+}
+
+
