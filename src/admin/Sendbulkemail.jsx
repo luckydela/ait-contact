@@ -4,26 +4,35 @@ import * as yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
 import axios from 'axios'
+import { useNavigate } from 'react-router'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const schema = yup.object({
-    bulkmsg:yup.string().required("Message field is required!"),
+  message:yup.string().required("Message field is required!"),
   
     })
 const Sendbulkemail = () => {
   const live_sendbulkmsgurl= "https://user-contact-form.herokuapp.com/api/admin/admin-bulkEmail"
   //const local_sendbulkmsgurl= "http://localhost:8080/api/admin/admin-bulkEmail"
 
+    const navigate = useNavigate("")
     const {handleSubmit, register, formState:{errors}} = useForm({
         resolver:yupResolver(schema),
-        bulkmsg:'',
+        message:''
       });
       //console.log(errors);
-    const sendbulkMsg = async ({bulkmsg})=>{
-      const res = await axios.post(live_sendbulkmsgurl, {bulkmsg})
+    const sendbulkMsg = async (bulkmsg)=>{
+      const res = await axios.post(live_sendbulkmsgurl, bulkmsg)
       .then(response=>{
-        console.log(response);
-        sendbulkMsg()
+        toast.success(response.data.data.message,{
+          position:toast.POSITION.TOP_CENTER
+        })
+        setTimeout(()=>{
+          navigate("/dashboard")
+        }, 3000)
+      
       }).catch(error=>{
         console.log(error);
       })
@@ -33,6 +42,7 @@ const Sendbulkemail = () => {
   return (
     <>
       <div className='heading'>
+        <ToastContainer/>
         <i className='fas fa-thin fa-envelope'></i>
        <h2>Send Email</h2>
      </div>
@@ -44,9 +54,9 @@ const Sendbulkemail = () => {
     
           <div className='contactbox'>
           <label htmlFor="">Message</label>
-            <textarea name='bulkmsg' type="text" id='bulkmsg' placeholder='Enter message here' {...register('bulkmsg', { required: true })}></textarea>
+            <textarea name='message' type="text" id='message' placeholder='Enter message here' {...register('message', { required: true })}></textarea>
             <span className='danger'>
-                {errors.bulkmsg?.message}
+                {errors.message?.message}
               </span>
           </div>
 

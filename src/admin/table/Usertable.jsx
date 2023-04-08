@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './table.css'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { FadeLoader } from 'react-spinners'
+// import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router';
 
 const Usertable = () => {
   const live_allcontactsurl = "https://user-contact-form.herokuapp.com/api/admin/admin-getForms"
@@ -13,56 +17,85 @@ const Usertable = () => {
   const  live_statusrejecturl ="https://user-contact-form.herokuapp.com/api/admin/admin-sendRejectDecision/"
   //const  local_statusrejecturl ="http://localhost:8080/api/admin/admin-sendRejectDecision"
 
-const navigate = useNavigate("")
+     const navigate = useNavigate("")
     const [columns, setcolumns] = useState([])
     const [records, setrecords] = useState([])
-    const [status , setstatus] = useState({
-      status: "",
-    })
+    const [loading, setloading] = useState(false)
+  
 
     useEffect(()=>{
-      getallcontacts()
+      setloading(true)
+      setTimeout(()=>{
+        getallcontacts()
+        setloading(false)
+      }, 3000)
       
     },[])
 
     const getallcontacts= async ()=>{
-      axios.post(live_allcontactsurl).then(response => {
+      await axios.post(live_allcontactsurl).then(response => {
          setcolumns(Object.keys(response.data.data.message[0]))
         setrecords(response.data.data.message)
-        //console.log(response.data.data.message[0].status);
+        
+
       })
     }
-    const Approvebtn = async (id)=>{
-      let act = 'Activated'
-      console.log(JSON.stringify(act));
-      const res = await axios.post(live_statusactivateurl+id, JSON.stringify(act))
+    const Approvebtn = async(id)=>{
+      const obj = '{"status":"Activate"}';
+      const json  = JSON.parse(obj)
+      //console.log(json);
+      const res = await axios.post(live_statusactivateurl+id, json)
       .then(response=>{
         //console.log(response);
-        alert(response.data.data.data.status[0])
-        navigate("/send-bulk-email")
+        toast.success(response.data.data.message,{
+          position:toast.POSITION.TOP_CENTER
+        })
+        setTimeout(()=>{
+          navigate("/send-bulk-email")
+        }, 2000)
+
       }).catch(error=>{
-        console.log(error);
-        alert(error)
+        toast.error("Server Error!",{
+          position:toast.POSITION.TOP_CENTER
+        })
       })
+
       return res
+
     }
 
-    const Rejectbtn = async ( id)=>{
-      const res = await axios.post(live_statusrejecturl+id, status)
+    const Rejectbtn = async (id)=>{
+      const obj = '{"status":"Reject"}';
+      const json  = JSON.parse(obj)
+      //console.log(json);
+      const res = await axios.post(live_statusrejecturl+id, json)
       .then(response=>{
         //console.log(response);
-        alert(response.data.data.data.status[0])
-        navigate("/send-bulk-email")
+        toast.success(response.data.data.message,{
+          position:toast.POSITION.TOP_CENTER
+        })
+        setTimeout(()=>{
+        }, 2000)
+
       }).catch(error=>{
-        console.log(error);
-        alert(error)
+        toast.error("Server Error!",{
+          position:toast.POSITION.TOP_CENTER
+        })
       })
       return res
+
     }
 
   return (
     <div>
-      <table id="contacts">
+      <ToastContainer/>
+        {
+          loading? 
+          <span>Loading...<FadeLoader className='clips' color="#44045d" loading={loading} size={20}  /></span>   
+                :
+             
+          <table id="contacts">
+
         <thead>
           <tr className='t-head'>
             {
@@ -85,15 +118,21 @@ const navigate = useNavigate("")
               <td>{data.address}</td>
               <td>{data.remarks}</td>
               <td>{data.status}</td>
-                <td> 
-                  <button type='submit' name='status'  id='status' value="Activated" style={{background:"#0a6533be"}} onClick={()=>Approvebtn(data.id)} onChange={(e)=> {setstatus({...status, status:e.target.value})}}>Activate</button>
-                  <button type='submit' name='status' id='status' value="Reject" style={{background:"#000"}} onClick={()=>Rejectbtn(data.id)} onChange={(e)=> {setstatus({...status, status:e.target.value})}}>Reject</button> 
+                <td>              
+                   <button type='submit' name='status'  id='status' style={{background:"#0a6533be"}} onClick={e=>Approvebtn(data.id)}>Activate</button>
+                  <button type='submit' name='status' id='status' value="Reject" style={{background:"#000"}} onClick={()=>Rejectbtn(data.id)}>Reject</button> 
                 </td>
               </tr>
             ))
           } 
+
         </tbody>
+
       </table>
+
+          
+        }
+        
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../App.css'
 import logo from '../../assets/AIT_NEW_LOGO.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,6 +6,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { HashLoader } from 'react-spinners'
+
 
 const schema = yup.object({
     email: yup.string().required("Email field is required!").email(),
@@ -16,6 +18,7 @@ const Login = () => {
     const live_adlgnurl = "https://user-contact-form.herokuapp.com/api/admin/admin-login"
         //const local_adlgnurl = "http://localhost:8080/api/admin/admin-login"
 
+    const [loading , setloading] = useState(false)
     const navigate = useNavigate("")
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
@@ -23,6 +26,13 @@ const Login = () => {
         password: ''
     });
     //console.log(errors);
+
+    useEffect(()=>{
+        setloading(true)
+        setTimeout(()=>{
+            setloading(false)
+        }, 3000)
+    },[])
     const formSubmit = async ({ email, password }) => {
         console.log({ email, password });
         const res = await axios.post(live_adlgnurl, { email, password })
@@ -49,39 +59,49 @@ const Login = () => {
 
     return (
         <div className='user-container' style={{ height: "100vh" }}>
+            {
+            loading? 
+             
+            <span>Loading...<HashLoader className='clips' color="#44045d" loading={loading} size={50}  /></span> 
+
+            :
+
             <div className='user-card'>
-                <h2> Admin login </h2>
-                <div className='card-container'>
-                    <form onSubmit={handleSubmit(formSubmit)}>
+            <h2> Admin login </h2>
+            <div className='card-container'>
+                <form onSubmit={handleSubmit(formSubmit)}>
 
-                        <div className='contactbox'>
-                            <label htmlFor="">Email</label>
-                            <input name='email' type="email" id='email' placeholder='Enter email' {...register('email', { required: true })} />
-                            <i className='fas fa-thin fa-envelope'></i>
-                            <span className='danger'>
-                                {errors.email?.message}
-                            </span>
-                        </div>
+                    <div className='contactbox'>
+                        <label htmlFor="">Email</label>
+                        <input name='email' type="email" id='email' placeholder='Enter email' {...register('email', { required: true })} />
+                        <i className='fas fa-thin fa-envelope'></i>
+                        <span className='danger'>
+                            {errors.email?.message}
+                        </span>
+                    </div>
 
-                        <div className='contactbox'>
-                            <label htmlFor="">Password</label>
-                            <input name='password' type="password" id='password' placeholder='Enter Password' {...register('password', { required: true })} />
-                            <i className='fas fa-thin fa-lock'></i>
-                            <span className='danger'>
-                                {errors.password?.message}
-                            </span>
-                        </div>
+                    <div className='contactbox'>
+                        <label htmlFor="">Password</label>
+                        <input name='password' type="password" id='password' placeholder='Enter Password' {...register('password', { required: true })} />
+                        <i className='fas fa-thin fa-lock'></i>
+                        <span className='danger'>
+                            {errors.password?.message}
+                        </span>
+                    </div>
 
-                        <div className='btncls'>
-                            <button type='submit' className='btn btn-primary' >login</button>
-                        </div>
-                        <br />
-                        <p>You do not have an account? <Link to="/x-signup">Signup</Link></p>
-                    </form>
-                </div>
-                <img src={logo} alt="gog logo" />
-
+                    <div className='btncls'>
+                        <button type='submit' className='btn btn-primary' >login</button>
+                    </div>
+                    <br />
+                    <p>You do not have an account? <Link to="/x-signup">Signup</Link></p>
+                </form>
             </div>
+            <img src={logo} alt="gog logo" />
+
+        </div>
+
+        }
+           
         </div>
     )
 }

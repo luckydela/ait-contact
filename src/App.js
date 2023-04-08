@@ -13,7 +13,6 @@ function App() {
       <Routes>
       <Route path='' element={<User/>} />
       <Route path='contact-success' element={<Submitsuccess/>} />
-
       <Route path='x-login' element={<Adminlogin/>} />
       <Route path='x-signup' element={<Signup/>} />
       <Route path="*" name="Home" element={<AppLayout/>} />   

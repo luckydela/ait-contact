@@ -69,3 +69,14 @@
     cursor: pointer;
  
   }
+
+  .ClipLoader{
+    display: flex;
+    font-weight: 900;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 200px #0dc8f2;
+
+
+  }
